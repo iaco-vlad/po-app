@@ -1,0 +1,39 @@
+version: '3.1'
+
+services:
+  mysql:
+    image: 'mysql:8.0'
+    working_dir: /application
+    container_name: po-mysql
+    volumes:
+      - '.:/application'
+      - './docker/mysql/mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql'
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=po
+      - MYSQL_USER=po
+      - MYSQL_PASSWORD=po-pass123!
+    ports:
+      - '52002:3306'
+
+  webserver:
+    image: 'nginx:alpine'
+    working_dir: /application
+    container_name: po-webserver
+    volumes:
+      - '.:/application'
+      - './docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
+    ports:
+      - '52000:80'
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    build: docker/php-fpm
+    working_dir: /application
+    container_name: po-php-fpm
+    volumes:
+      - '.:/application'
+      - './docker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
+    depends_on:
+      - mysql

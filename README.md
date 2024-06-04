@@ -45,7 +45,7 @@ npm run dev
 This command will start the development server and compile the necessary assets.
 
 5. **Access the application:**
-   After starting the development server, you can access the application by opening a web browser and navigating to the appropriate URL and port specified in the terminal.
+   After starting the development server, you can access the application by opening a web browser and navigating to [http://localhost:52000/](http://localhost:52000/) or to the appropriate URL and port specified in the terminal. 
 
 That's it! You should now have the project up and running on your local machine.
 

@@ -1,4 +1,4 @@
-# Project Name
+# Purchase Order App
 
 This project requires Docker and npm to run. Follow the steps below to set up and run the project.
 

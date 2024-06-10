@@ -21,14 +21,29 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $request->validate([
+            'items' => 'required|array|min:1',
+            'items.*.description' => 'required|string',
+            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.unit_price' => 'required|numeric|min:0',
+            'items.*.category' => 'required|string',
+        ]);
+
         $purchaseOrder = PurchaseOrder::create($request->except('items'));
 
+        $total = 0;
+
         foreach ($request->input('items', []) as $item) {
-            $purchaseOrder->items()->create($item);
+            $purchaseOrderItem = $purchaseOrder->items()->create($item);
+            $total += $purchaseOrderItem->quantity * $purchaseOrderItem->unit_price;
         }
+
+        $purchaseOrder->total = $total;
+        $purchaseOrder->save();
 
         return response()->json($purchaseOrder->load('items'), 201);
     }
+
 
     public function show($id): JsonResponse
     {
@@ -38,14 +53,28 @@ class PurchaseOrderController extends Controller
 
     public function update(Request $request, $id): JsonResponse
     {
+        $request->validate([
+            'items' => 'required|array|min:1',
+            'items.*.description' => 'required|string',
+            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.unit_price' => 'required|numeric|min:0',
+            'items.*.category' => 'required|string',
+        ]);
+
         $purchaseOrder = PurchaseOrder::findOrFail($id);
         $purchaseOrder->update($request->except('items'));
 
         $purchaseOrder->items()->delete();
 
+        $total = 0;
+
         foreach ($request->input('items', []) as $item) {
-            $purchaseOrder->items()->create($item);
+            $purchaseOrderItem = $purchaseOrder->items()->create($item);
+            $total += $purchaseOrderItem->quantity * $purchaseOrderItem->unit_price;
         }
+
+        $purchaseOrder->total = $total;
+        $purchaseOrder->save();
 
         return response()->json($purchaseOrder->load('items'));
     }

@@ -25,7 +25,7 @@ class PurchaseOrderSeeder extends Seeder
                 'updated_at' => $createdAt,
             ]);
 
-            $itemCount = $faker->numberBetween(0, 4);
+            $itemCount = $faker->numberBetween(1, 6);
 
             $total = 0;
 

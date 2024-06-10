@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import PurchaseOrderList from './components/PurchaseOrderList.vue';
 import PurchaseOrderForm from './components/PurchaseOrderForm.vue';
+import PurchaseOrderMetrics from "./components/PurchaseOrderMetrics.vue";
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         name: 'purchase-order-edit',
         component: PurchaseOrderForm,
         props: true,
+    },
+    {
+        path: '/metrics',
+        name: 'purchase-order-metrics',
+        component: PurchaseOrderMetrics,
     },
 ];
 

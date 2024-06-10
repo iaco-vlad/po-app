@@ -3,6 +3,7 @@
         <div class="header">
             <h2>Purchase Orders</h2>
             <div class="actions">
+                <b-button variant="info" @click="$router.push({ name: 'purchase-order-metrics' })">View Metrics</b-button>
                 <b-form-input v-model="searchTerm" placeholder="Search..." class="search-input"></b-form-input>
                 <b-button variant="primary" @click="navigateToCreate">Create New</b-button>
                 <b-button variant="danger" @click="confirmBulkDelete" :disabled="selectedIds.length === 0">Bulk Delete</b-button>
@@ -158,7 +159,6 @@ export default {
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
 }
 

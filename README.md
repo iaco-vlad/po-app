@@ -12,7 +12,7 @@ This project requires Docker and npm to run. Follow the steps below to set up an
 1. **Start the Docker containers:**
    Open a terminal and navigate to the project directory. Run the following command to start the Docker containers:
 ```
-composer up -d
+docker-compose up -d
 ```
 This command will build and start the necessary containers defined in the `docker-compose.yml` file.
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [ ! -f /application/.env ]; then
+    echo "Copying .env.example to .env..."
     cp /application/.env.example /application/.env
 fi
 

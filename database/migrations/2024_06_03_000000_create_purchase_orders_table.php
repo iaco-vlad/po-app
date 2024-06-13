@@ -12,7 +12,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->id();
             $table->string('purchase_order_number');
             $table->string('buyer_name');
-            $table->decimal('total', 10, 2);
+            $table->decimal('total', 10, 2)->nullable();
             $table->timestamps();
         });
     }

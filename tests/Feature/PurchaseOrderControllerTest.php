@@ -40,6 +40,10 @@ class PurchaseOrderControllerTest extends TestCase
     {
         $purchaseOrderData = PurchaseOrder::factory()->make()->toArray();
         $itemsData = PurchaseOrderItem::factory()->count(3)->make()->toArray();
+        $purchaseOrderData['total'] = 0;
+        foreach ($itemsData as $item) {
+            $purchaseOrderData['total'] += $item['quantity'] * $item['unit_price'];
+        }
 
         $response = $this->postJson('/api/orders', array_merge($purchaseOrderData, ['items' => $itemsData]));
 
@@ -122,8 +126,10 @@ class PurchaseOrderControllerTest extends TestCase
         $updatedPurchaseOrderData = PurchaseOrder::factory()->make()->toArray();
         $updatedItemsData = PurchaseOrderItem::factory()->count(2)->make()->toArray();
 
+        $updatedPurchaseOrderData['total'] = 0;
         foreach ($updatedItemsData as &$item) {
             $item['purchase_order_id'] = $purchaseOrder->id;
+            $updatedPurchaseOrderData['total'] += $item['quantity'] * $item['unit_price'];
         }
 
         $response = $this->putJson("/api/orders/{$purchaseOrder->id}", array_merge($updatedPurchaseOrderData, ['items' => $updatedItemsData]));

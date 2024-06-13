@@ -53,6 +53,8 @@ class PurchaseOrderController extends Controller
 
     public function update(Request $request, $id): JsonResponse
     {
+        $purchaseOrder = PurchaseOrder::findOrFail($id);
+
         $request->validate([
             'items' => 'required|array|min:1',
             'items.*.description' => 'required|string',
@@ -61,7 +63,6 @@ class PurchaseOrderController extends Controller
             'items.*.category' => 'required|string',
         ]);
 
-        $purchaseOrder = PurchaseOrder::findOrFail($id);
         $purchaseOrder->update($request->except('items'));
 
         $purchaseOrder->items()->delete();

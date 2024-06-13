@@ -94,6 +94,9 @@ export default {
                 this.purchaseOrder.items.every(item => item.description && item.quantity && item.unit_price && item.category)
             );
         },
+        isEdit() {
+            return this.id !== null;
+        }
     },
     methods: {
         async fetchPurchaseOrder() {
@@ -138,7 +141,6 @@ export default {
     },
     mounted() {
         if (this.id) {
-            this.isEdit = true;
             this.fetchPurchaseOrder();
         }
     },
